@@ -37,7 +37,8 @@ public class TextStatistics {
      *     4. If at the end it turns out that the word contains 0 vowels, then consider this word as 1-syllable.
      */
     static int countSyllables(final String word) {
-        return max(1, word.replaceAll("e$", "")
+        return max(1, word.toLowerCase()
+                .replaceAll("e$", "")
                 .replaceAll("[aeiouy]{2}", "a")
                 .replaceAll("[^aeiouy]", "")
                 .length());

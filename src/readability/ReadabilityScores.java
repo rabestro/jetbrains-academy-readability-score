@@ -7,16 +7,21 @@ import static java.lang.Math.*;
 public enum ReadabilityScores {
     ARI("Automated Readability Index",
             text -> 4.71 * text.characters / text.words + 0.5 * text.words / text.sentences - 21.43),
+
     FK("Flesch–Kincaid readability tests",
             text -> 0.39 * text.words / text.sentences + 11.8 * text.syllables / text.words - 15.59),
+
     SMOG("Simple Measure of Gobbledygook",
             text -> 1.043 * sqrt(text.polysyllables * 30. / text.sentences) + 3.1291),
+
     CL("Coleman–Liau index",
             text -> {
                 final double l = 100. * text.characters / text.words;
                 final double s = 100. * text.sentences / text.words;
                 return 0.0588 * l - 0.296 * s - 15.8;
             });
+
+    public static final String ALL = "ALL";
 
     private final String fullName;
     private final ToDoubleFunction<TextStatistics> formula;
