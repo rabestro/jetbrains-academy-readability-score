@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static java.lang.String.join;
+import static java.util.stream.Collectors.joining;
 
 public class Application {
     private final TextStatistics text;
@@ -15,7 +16,9 @@ public class Application {
     void run() {
         showTextStatistics();
 
-        System.out.println("Enter the score you want to calculate (ARI, FK, SMOG, CL, all):");
+        System.out.printf("Enter the score you want to calculate (%s, all):%n",
+                Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", ")));
+
         final var rsName = new Scanner(System.in).next().toUpperCase();
         final var isAll = rsName.equals(ReadabilityScores.ALL);
 
