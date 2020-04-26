@@ -24,7 +24,8 @@ public class Application {
 
         Stream.of(ReadabilityScores.values())
                 .filter(rs -> isAll || rs.name().equals(rsName))
-                .forEach(rs -> rs.printScore(text));
+                .map(rs -> rs.getScoreAndAge(text))
+                .forEach(System.out::println);
 
         Stream.of(ReadabilityScores.values())
                 .filter(rs -> isAll || rs.name().equals(rsName))
