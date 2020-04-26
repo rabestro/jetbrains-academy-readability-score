@@ -14,7 +14,7 @@ public class Application {
     }
 
     void run() {
-        showTextStatistics();
+        printTextStatistics();
 
         System.out.printf("Enter the score you want to calculate (%s, all):%n",
                 Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", ")));
@@ -24,20 +24,21 @@ public class Application {
 
         Stream.of(ReadabilityScores.values())
                 .filter(rs -> isAll || rs.name().equals(rsName))
-                .map(rs -> rs.getScoreAndAge(text))
-                .forEach(System.out::println);
-
-        Stream.of(ReadabilityScores.values())
-                .filter(rs -> isAll || rs.name().equals(rsName))
+                .peek(rs -> System.out.println(rs.getScoreAndAge(text)))
                 .mapToInt(rs -> rs.getAge(text))
                 .average()
-                .ifPresentOrElse(
-                        averageAge -> System.out.printf(
-                                "This text should be understood in average by %.2f year olds.", averageAge),
-                        () -> System.out.println("Wrong name of Readability Score!"));
+                .ifPresentOrElse(this::printAverage, this::printErrorMessage);
     }
 
-    void showTextStatistics() {
+    void printErrorMessage() {
+        System.out.println("Wrong name of Readability Score!");
+    }
+
+    void printAverage(double averageAge) {
+        System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
+    }
+
+    void printTextStatistics() {
         System.out.printf(join("%n",
                 "The text is: %n%s",
                 "Words: %d",
