@@ -3,7 +3,6 @@ package readability;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static java.lang.String.join;
 import static java.util.stream.Collectors.joining;
 
 public class Application {

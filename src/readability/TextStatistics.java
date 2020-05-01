@@ -26,13 +26,14 @@ public class TextStatistics {
     }
 
     public long getWords() {
-        return words == NOT_CALCULATED ? (words = text.split(" ").length) : words;
+        return words == NOT_CALCULATED ? (words = getWordsStream().count()) : words;
     }
 
     public long getSentences() {
-        return sentences == NOT_CALCULATED
-                ? (sentences = text.split("[!?.]+").length)
-                : sentences;
+        if (sentences == NOT_CALCULATED) {
+            sentences = text.split("[!?.]+").length;
+        }
+        return sentences;
     }
 
     public long getSyllables() {
