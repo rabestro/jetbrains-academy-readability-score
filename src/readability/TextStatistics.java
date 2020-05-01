@@ -6,23 +6,54 @@ import static java.lang.Math.max;
 import static java.lang.String.join;
 
 public class TextStatistics {
-    final long characters;
-    final long words;
-    final long sentences;
-    final long syllables;
-    final long polysyllables;
-    final String text;
+    public static final long NOT_CALCULATED = -1;
+    private final String text;
+    private long characters = NOT_CALCULATED;
+    private long words = NOT_CALCULATED;
+    private long sentences = NOT_CALCULATED;
+    private long syllables = NOT_CALCULATED;
+    private long polysyllables = NOT_CALCULATED;
 
     public TextStatistics(final String text) {
         this.text = text;
-        characters = text.replaceAll("\\s", "").length();
-        words = text.split(" ").length;
-        sentences = text.split("[!?.]+").length;
-        syllables = getWordsStream().mapToInt(TextStatistics::countSyllables).sum();
-        polysyllables = getWordsStream().filter(TextStatistics::isPolysyllable).count();
     }
 
-    static int countSyllables(final String word) {
+    public long getCharacters() {
+        if (characters == NOT_CALCULATED) {
+            characters = text.replaceAll("\\s", "").length();
+        }
+        return characters;
+    }
+
+    public long getWords() {
+        return words == NOT_CALCULATED ? (words = text.split(" ").length) : words;
+    }
+
+    public long getSentences() {
+        return sentences == NOT_CALCULATED
+                ? (sentences = text.split("[!?.]+").length)
+                : sentences;
+    }
+
+    public long getSyllables() {
+        if (syllables == NOT_CALCULATED) {
+            syllables = getWordsStream().mapToInt(TextStatistics::countSyllables).sum();
+        }
+        return syllables;
+    }
+
+    public long getPolysyllables() {
+        if (polysyllables == NOT_CALCULATED) {
+            polysyllables = getWordsStream().filter(TextStatistics::isPolysyllable).count();
+        }
+        return polysyllables;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public static int countSyllables(final String word) {
         return max(1, word.toLowerCase()
                 .replaceAll("e$", "")
                 .replaceAll("[aeiouy]{2}", "a")
@@ -30,11 +61,11 @@ public class TextStatistics {
                 .length());
     }
 
-    static boolean isPolysyllable(final String word) {
+    public static boolean isPolysyllable(final String word) {
         return countSyllables(word) > 2;
     }
 
-    Stream<String> getWordsStream() {
+    public Stream<String> getWordsStream() {
         return Stream.of(text.split("[^\\p{Alpha}]+"));
     }
 
@@ -47,6 +78,6 @@ public class TextStatistics {
                 "Characters: %d",
                 "Syllables: %d",
                 "Polysyllables: %d%n"),
-                text, words, sentences, characters, syllables, polysyllables);
+                getText(), getWords(), getSentences(), getCharacters(), getSyllables(), getPolysyllables());
     }
 }
