@@ -3,6 +3,7 @@ package readability;
 import java.util.stream.Stream;
 
 import static java.lang.Math.max;
+import static java.lang.String.join;
 
 public class TextStatistics {
     final long characters;
@@ -35,5 +36,17 @@ public class TextStatistics {
 
     Stream<String> getWordsStream() {
         return Stream.of(text.split("[^\\p{Alpha}]+"));
+    }
+
+    @Override
+    public String toString() {
+        return String.format(join("%n",
+                "The text is: %n%s",
+                "Words: %d",
+                "Sentences: %d",
+                "Characters: %d",
+                "Syllables: %d",
+                "Polysyllables: %d%n"),
+                text, words, sentences, characters, syllables, polysyllables);
     }
 }

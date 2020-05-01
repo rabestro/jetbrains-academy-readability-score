@@ -7,15 +7,14 @@ import static java.lang.String.join;
 import static java.util.stream.Collectors.joining;
 
 public class Application {
-    private final TextStatistics text;
+    private final TextStatistics textStatistics;
 
     Application(TextStatistics text) {
-        this.text = text;
+        this.textStatistics = text;
     }
 
     void run() {
-        printTextStatistics();
-
+        System.out.println(textStatistics);
         System.out.printf("Enter the score you want to calculate (%s, all):%n",
                 Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", ")));
 
@@ -24,8 +23,8 @@ public class Application {
 
         Stream.of(ReadabilityScores.values())
                 .filter(rs -> isAll || rs.name().equals(rsName))
-                .peek(rs -> System.out.println(rs.getScoreAndAge(text)))
-                .mapToInt(rs -> rs.getAge(text))
+                .peek(rs -> System.out.println(rs.getScoreAndAge(textStatistics)))
+                .mapToInt(rs -> rs.getAge(textStatistics))
                 .average()
                 .ifPresentOrElse(this::printAverage, this::printErrorMessage);
     }
@@ -36,16 +35,5 @@ public class Application {
 
     void printAverage(double averageAge) {
         System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
-    }
-
-    void printTextStatistics() {
-        System.out.printf(join("%n",
-                "The text is: %n%s",
-                "Words: %d",
-                "Sentences: %d",
-                "Characters: %d",
-                "Syllables: %d",
-                "Polysyllables: %d%n"),
-                text.text, text.words, text.sentences, text.characters, text.syllables, text.polysyllables);
     }
 }
