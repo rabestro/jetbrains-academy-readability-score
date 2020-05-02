@@ -26,7 +26,10 @@ public class TextStatistics {
     }
 
     public long getWords() {
-        return words == NOT_CALCULATED ? (words = getWordsStream().count()) : words;
+        if (words == NOT_CALCULATED) {
+            words = getWordsStream().count();
+        }
+        return words;
     }
 
     public long getSentences() {
