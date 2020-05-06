@@ -1,12 +1,13 @@
 package readability;
 
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.lang.Math.max;
-import static java.lang.String.join;
 
 public class TextStatistics {
-    public static final long NOT_CALCULATED = -1;
+    private static final long NOT_CALCULATED = -1;
+    private static final Pattern SPLIT_WORDS = Pattern.compile("[^\\p{Alpha}]+");
     private final String text;
     private long characters = NOT_CALCULATED;
     private long words = NOT_CALCULATED;
@@ -70,12 +71,12 @@ public class TextStatistics {
     }
 
     public Stream<String> getWordsStream() {
-        return Stream.of(text.split("[^\\p{Alpha}]+"));
+        return SPLIT_WORDS.splitAsStream(text);
     }
 
     @Override
     public String toString() {
-        return String.format(join("%n",
+        return String.format(String.join("%n",
                 "The text is: %n%s",
                 "Words: %d",
                 "Sentences: %d",
