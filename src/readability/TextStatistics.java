@@ -1,7 +1,6 @@
 package readability;
 
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import static java.lang.Math.max;
 
@@ -29,28 +28,28 @@ public class TextStatistics {
 
     public long getWords() {
         if (words == NOT_CALCULATED) {
-            words = getWordsStream().count();
+            words = SPLIT_WORDS.splitAsStream(text).count();
         }
         return words;
     }
 
     public long getSentences() {
         if (sentences == NOT_CALCULATED) {
-            sentences = SPLIT_SENTENCES.split(text).length;
+            sentences = SPLIT_SENTENCES.splitAsStream(text).count();
         }
         return sentences;
     }
 
     public long getSyllables() {
         if (syllables == NOT_CALCULATED) {
-            syllables = getWordsStream().mapToInt(TextStatistics::countSyllables).sum();
+            syllables = SPLIT_WORDS.splitAsStream(text).mapToInt(TextStatistics::countSyllables).sum();
         }
         return syllables;
     }
 
     public long getPolysyllables() {
         if (polysyllables == NOT_CALCULATED) {
-            polysyllables = getWordsStream().filter(TextStatistics::isPolysyllable).count();
+            polysyllables = SPLIT_WORDS.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
         }
         return polysyllables;
     }
@@ -69,10 +68,6 @@ public class TextStatistics {
 
     private static boolean isPolysyllable(final String word) {
         return countSyllables(word) > 2;
-    }
-
-    private Stream<String> getWordsStream() {
-        return SPLIT_WORDS.splitAsStream(text);
     }
 
     @Override
