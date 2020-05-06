@@ -59,7 +59,7 @@ public class TextStatistics {
         return text;
     }
 
-    public static int countSyllables(final String word) {
+    private static int countSyllables(final String word) {
         return max(1, word.toLowerCase()
                 .replaceAll("e$", "")
                 .replaceAll("[aeiouy]{2}", "a")
@@ -67,11 +67,11 @@ public class TextStatistics {
                 .length());
     }
 
-    public static boolean isPolysyllable(final String word) {
+    private static boolean isPolysyllable(final String word) {
         return countSyllables(word) > 2;
     }
 
-    public Stream<String> getWordsStream() {
+    private Stream<String> getWordsStream() {
         return SPLIT_WORDS.splitAsStream(text);
     }
 
