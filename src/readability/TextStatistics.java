@@ -8,6 +8,7 @@ import static java.lang.Math.max;
 public class TextStatistics {
     private static final long NOT_CALCULATED = -1;
     private static final Pattern SPLIT_WORDS = Pattern.compile("[^\\p{Alpha}]+");
+    private static final Pattern SPLIT_SENTENCES = Pattern.compile("[!?.]+");
     private final String text;
     private long characters = NOT_CALCULATED;
     private long words = NOT_CALCULATED;
@@ -35,7 +36,7 @@ public class TextStatistics {
 
     public long getSentences() {
         if (sentences == NOT_CALCULATED) {
-            sentences = text.split("[!?.]+").length;
+            sentences = SPLIT_SENTENCES.split(text).length;
         }
         return sentences;
     }
