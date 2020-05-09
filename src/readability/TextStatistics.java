@@ -6,8 +6,8 @@ import static java.lang.Math.max;
 
 public class TextStatistics {
     private static final long NOT_CALCULATED = -1;
-    private static final Pattern SPLIT_WORDS = Pattern.compile("[^\\p{Alpha}]+");
-    private static final Pattern SPLIT_SENTENCES = Pattern.compile("[!?.]+");
+    private static final Pattern WORDS_DELIMITER = Pattern.compile("[^\\p{Alpha}]+");
+    private static final Pattern SENTENCES_DELIMITER = Pattern.compile("[!?.]+");
     private final String text;
     private long characters = NOT_CALCULATED;
     private long words = NOT_CALCULATED;
@@ -28,28 +28,28 @@ public class TextStatistics {
 
     public long getWords() {
         if (words == NOT_CALCULATED) {
-            words = SPLIT_WORDS.splitAsStream(text).count();
+            words = WORDS_DELIMITER.splitAsStream(text).count();
         }
         return words;
     }
 
     public long getSentences() {
         if (sentences == NOT_CALCULATED) {
-            sentences = SPLIT_SENTENCES.splitAsStream(text).count();
+            sentences = SENTENCES_DELIMITER.splitAsStream(text).count();
         }
         return sentences;
     }
 
     public long getSyllables() {
         if (syllables == NOT_CALCULATED) {
-            syllables = SPLIT_WORDS.splitAsStream(text).mapToInt(TextStatistics::countSyllables).sum();
+            syllables = WORDS_DELIMITER.splitAsStream(text).mapToInt(TextStatistics::countSyllables).sum();
         }
         return syllables;
     }
 
     public long getPolysyllables() {
         if (polysyllables == NOT_CALCULATED) {
-            polysyllables = SPLIT_WORDS.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
+            polysyllables = WORDS_DELIMITER.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
         }
         return polysyllables;
     }
