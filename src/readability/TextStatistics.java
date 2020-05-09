@@ -5,54 +5,43 @@ import java.util.regex.Pattern;
 import static java.lang.Math.max;
 
 public class TextStatistics {
-    private static final long NOT_CALCULATED = -1;
     private static final Pattern WORDS_DELIMITER = Pattern.compile("[^\\p{Alpha}]+");
     private static final Pattern SENTENCES_DELIMITER = Pattern.compile("[!?.]+");
     private static final Pattern PATTERN_SYLLABLE = Pattern.compile("([aiouy]|e(?!$))+");
 
     private final String text;
-    private long characters = NOT_CALCULATED;
-    private long words = NOT_CALCULATED;
-    private long sentences = NOT_CALCULATED;
-    private long syllables = NOT_CALCULATED;
-    private long polysyllables = NOT_CALCULATED;
+    private final long characters;
+    private final long words;
+    private final long sentences;
+    private final long syllables;
+    private final long polysyllables;
 
     public TextStatistics(final String text) {
         this.text = text;
+        characters = text.replaceAll("\\s", "").length();
+        words = WORDS_DELIMITER.splitAsStream(text).count();
+        sentences = SENTENCES_DELIMITER.splitAsStream(text).count();
+        syllables = WORDS_DELIMITER.splitAsStream(text).mapToLong(TextStatistics::countSyllables).sum();
+        polysyllables = WORDS_DELIMITER.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
     }
 
     public long getCharacters() {
-        if (characters == NOT_CALCULATED) {
-            characters = text.replaceAll("\\s", "").length();
-        }
         return characters;
     }
 
     public long getWords() {
-        if (words == NOT_CALCULATED) {
-            words = WORDS_DELIMITER.splitAsStream(text).count();
-        }
         return words;
     }
 
     public long getSentences() {
-        if (sentences == NOT_CALCULATED) {
-            sentences = SENTENCES_DELIMITER.splitAsStream(text).count();
-        }
         return sentences;
     }
 
     public long getSyllables() {
-        if (syllables == NOT_CALCULATED) {
-            syllables = WORDS_DELIMITER.splitAsStream(text).mapToLong(TextStatistics::countSyllables).sum();
-        }
         return syllables;
     }
 
     public long getPolysyllables() {
-        if (polysyllables == NOT_CALCULATED) {
-            polysyllables = WORDS_DELIMITER.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
-        }
         return polysyllables;
     }
 
