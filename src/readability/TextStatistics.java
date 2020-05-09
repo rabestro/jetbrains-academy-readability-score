@@ -8,6 +8,8 @@ public class TextStatistics {
     private static final long NOT_CALCULATED = -1;
     private static final Pattern WORDS_DELIMITER = Pattern.compile("[^\\p{Alpha}]+");
     private static final Pattern SENTENCES_DELIMITER = Pattern.compile("[!?.]+");
+    private static final Pattern PATTERN_SYLLABLE = Pattern.compile("([aiouy]|e(?!$))+");
+
     private final String text;
     private long characters = NOT_CALCULATED;
     private long words = NOT_CALCULATED;
@@ -42,7 +44,7 @@ public class TextStatistics {
 
     public long getSyllables() {
         if (syllables == NOT_CALCULATED) {
-            syllables = WORDS_DELIMITER.splitAsStream(text).mapToInt(TextStatistics::countSyllables).sum();
+            syllables = WORDS_DELIMITER.splitAsStream(text).mapToLong(TextStatistics::countSyllables).sum();
         }
         return syllables;
     }
@@ -58,12 +60,8 @@ public class TextStatistics {
         return text;
     }
 
-    private static int countSyllables(final String word) {
-        return max(1, word.toLowerCase()
-                .replaceAll("e$", "")
-                .replaceAll("[aeiouy]{2}", "a")
-                .replaceAll("[^aeiouy]", "")
-                .length());
+    private static long countSyllables(final String word) {
+        return max(1, PATTERN_SYLLABLE.matcher(word).results().count());
     }
 
     private static boolean isPolysyllable(final String word) {
