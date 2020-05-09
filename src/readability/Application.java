@@ -8,8 +8,8 @@ import static java.util.stream.Collectors.joining;
 public class Application {
     private final TextStatistics textStatistics;
 
-    Application(TextStatistics text) {
-        this.textStatistics = text;
+    Application(TextStatistics textStatistics) {
+        this.textStatistics = textStatistics;
     }
 
     void run() {
