@@ -30,7 +30,7 @@ public class Application {
     }
 
     private void printScoreAndAge(ReadabilityScores readabilityScore) {
-        System.out.print(readabilityScore.getScoreAndAge(textStatistics));
+        System.out.println(readabilityScore.getScoreAndAge(textStatistics));
     }
 
     private void printAverage(double averageAge) {

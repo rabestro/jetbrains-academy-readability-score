@@ -46,7 +46,7 @@ public enum ReadabilityScores {
 
     String getScoreAndAge(final TextStatistics text) {
         final double score = formula.applyAsDouble(text);
-        return String.format("%s: %.2f (about %d year olds).%n", fullName, score, calculateAge(score));
+        return String.format("%s: %.2f (about %d year olds).", fullName, score, calculateAge(score));
     }
 
     int getAge(final TextStatistics text) {
