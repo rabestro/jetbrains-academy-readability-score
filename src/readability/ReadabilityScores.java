@@ -1,8 +1,10 @@
 package readability;
 
 import java.util.function.ToDoubleFunction;
+import java.util.stream.Stream;
 
 import static java.lang.Math.*;
+import static java.util.stream.Collectors.joining;
 
 public enum ReadabilityScores {
     ARI("Automated Readability Index",
@@ -36,6 +38,10 @@ public enum ReadabilityScores {
     static int calculateAge(final double score) {
         final int level = min(14, max(1, (int) ceil(score))) - 1;
         return new int[]{6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 24, 25}[level];
+    }
+
+    public static String getShortNames() {
+        return Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", "));
     }
 
     String getScoreAndAge(final TextStatistics text) {

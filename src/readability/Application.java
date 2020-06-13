@@ -1,9 +1,8 @@
 package readability;
 
 import java.util.Scanner;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.joining;
 
 public class Application {
     private final TextStatistics textStatistics;
@@ -14,25 +13,30 @@ public class Application {
 
     void run() {
         System.out.println(textStatistics);
-        System.out.printf("Enter the score you want to calculate (%s, all):%n",
-                Stream.of(ReadabilityScores.values()).map(Enum::toString).collect(joining(", ")));
+        System.out.printf("Enter the score you want to calculate (%s, all):%n", ReadabilityScores.getShortNames());
 
         final var rsName = new Scanner(System.in).next().toUpperCase();
         final var isAll = rsName.equals(ReadabilityScores.ALL);
+        final Predicate<ReadabilityScores> isSelected =
+                readabilityScore -> readabilityScore.name().equals(rsName) || isAll;
 
         Stream.of(ReadabilityScores.values())
-                .filter(rs -> isAll || rs.name().equals(rsName))
-                .peek(rs -> System.out.println(rs.getScoreAndAge(textStatistics)))
+                .filter(isSelected)
+                .peek(this::printScoreAndAge)
                 .mapToInt(rs -> rs.getAge(textStatistics))
                 .average()
                 .ifPresentOrElse(this::printAverage, this::printErrorMessage);
     }
 
-    private void printErrorMessage() {
-        System.out.println("Wrong name of Readability Score!");
+    private void printScoreAndAge(ReadabilityScores readabilityScore) {
+        System.out.print(readabilityScore.getScoreAndAge(textStatistics));
     }
 
     private void printAverage(double averageAge) {
-        System.out.printf("This text should be understood in average by %.2f year olds.", averageAge);
+        System.out.printf("%nThis text should be understood in average by %.2f year olds.", averageAge);
+    }
+
+    private void printErrorMessage() {
+        System.out.println("Wrong name of Readability Score!");
     }
 }
