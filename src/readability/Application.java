@@ -15,10 +15,11 @@ public class Application {
         System.out.println(textStatistics);
         System.out.printf("Enter the score you want to calculate (%s, all):%n", ReadabilityScores.getShortNames());
 
-        final var rsName = new Scanner(System.in).next().toUpperCase();
-        final var isAll = rsName.equals(ReadabilityScores.ALL);
+        final var scoreName = new Scanner(System.in).next().toUpperCase();
+        final var isSelectedAll = scoreName.equals(ReadabilityScores.ALL);
+
         final Predicate<ReadabilityScores> isSelected =
-                readabilityScore -> readabilityScore.name().equals(rsName) || isAll;
+                score -> score.name().equals(scoreName) || isSelectedAll;
 
         Stream.of(ReadabilityScores.values())
                 .filter(isSelected)

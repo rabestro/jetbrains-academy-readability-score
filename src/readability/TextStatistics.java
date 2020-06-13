@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 import static java.lang.Math.max;
 
 public class TextStatistics {
-    private static final Pattern WORDS_DELIMITER = Pattern.compile("[^\\p{Alpha}]+");
+    private static final Pattern WORDS_DELIMITER = Pattern.compile("\\PL+");
     private static final Pattern SENTENCES_DELIMITER = Pattern.compile("[!?.]+");
     private static final Pattern PATTERN_SYLLABLE = Pattern.compile("([aiouy]|e(?!$))+");
 
