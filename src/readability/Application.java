@@ -4,22 +4,21 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class Application {
+import static readability.ReadabilityScores.ALL;
+
+public class Application implements Runnable {
     private final TextStatistics textStatistics;
 
     Application(TextStatistics textStatistics) {
         this.textStatistics = textStatistics;
     }
 
-    void run() {
-        System.out.println(textStatistics);
-        System.out.printf("Enter the score you want to calculate (%s, all):%n", ReadabilityScores.getShortNames());
+    public void run() {
+        System.out.println(textStatistics.getInfo());
+        final var scoreName = askScoreName();
 
-        final var scoreName = new Scanner(System.in).next().toUpperCase();
-        final var isSelectedAll = scoreName.equals(ReadabilityScores.ALL);
-
-        final Predicate<ReadabilityScores> isSelected =
-                score -> score.name().equals(scoreName) || isSelectedAll;
+        final Predicate<ReadabilityScores> isSelected = score ->
+                scoreName.equals(score.name()) || scoreName.equals(ALL);
 
         Stream.of(ReadabilityScores.values())
                 .filter(isSelected)
@@ -39,5 +38,11 @@ public class Application {
 
     private void printErrorMessage() {
         System.out.println("Wrong name of Readability Score!");
+    }
+
+    private String askScoreName() {
+        System.out.printf("Enter the score you want to calculate (%s, all):%n",
+                ReadabilityScores.getShortNames());
+        return new Scanner(System.in).next().toUpperCase();
     }
 }

@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             new Application(
-                    new TextStatistics(
+                    new TextStatisticsLazy(
                             Files.readString(
                                     Path.of(args[0])))
             ).run();
