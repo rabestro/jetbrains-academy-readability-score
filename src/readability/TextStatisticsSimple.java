@@ -17,26 +17,32 @@ public class TextStatisticsSimple implements TextStatistics {
         polysyllables = WORDS_DELIMITER.splitAsStream(text).filter(TextStatistics::isPolysyllable).count();
     }
 
+    @Override
     public long getCharacters() {
         return characters;
     }
 
+    @Override
     public long getWords() {
         return words;
     }
 
+    @Override
     public long getSentences() {
         return sentences;
     }
 
+    @Override
     public long getSyllables() {
         return syllables;
     }
 
+    @Override
     public long getPolysyllables() {
         return polysyllables;
     }
 
+    @Override
     public String getText() {
         return text;
     }
