@@ -6,15 +6,15 @@ import java.util.stream.Stream;
 
 import static readability.ReadabilityScores.ALL;
 
-public class Application {
+public class Application implements Runnable {
     private final TextStatistics textStatistics;
 
     Application(TextStatistics textStatistics) {
         this.textStatistics = textStatistics;
     }
 
-    void run() {
-        textStatistics.printStatistics();
+    public void run() {
+        System.out.println(textStatistics.getInfo());
         final var scoreName = askScoreName();
 
         final Predicate<ReadabilityScores> isSelected = score ->

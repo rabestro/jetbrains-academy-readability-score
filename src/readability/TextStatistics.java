@@ -21,7 +21,7 @@ public interface TextStatistics {
 
     String getText();
 
-    default String printStatistics() {
+    default String getInfo() {
         return String.format(String.join("%n",
                 "The text is: %n%s",
                 "Words: %d",
