@@ -43,3 +43,6 @@ Coleman–Liau index: 10.66 (about 17 year olds).
  
 This text should be understood in average by 14.25 year olds.
 ```
+## UML Diagrams
+
+![Package readability](uml/readability.png)

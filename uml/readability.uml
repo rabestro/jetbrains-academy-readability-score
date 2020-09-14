@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>readability</OriginalElement>
+  <nodes>
+    <node x="240.25" y="0.0">readability.TextStatistics</node>
+    <node x="0.0" y="310.0">readability.ReadabilityScores</node>
+    <node x="573.0" y="310.0">readability.TextStatisticsLazy</node>
+    <node x="345.0" y="310.0">readability.TextStatisticsSimple</node>
+    <node x="392.06018518518516" y="740.0">readability.Main</node>
+    <node x="108.43287037037038" y="537.0">readability.Application</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="readability.ReadabilityScores" target="readability.TextStatistics">
+      <point x="-78.25" y="-88.5" />
+      <point x="78.25" y="280.0" />
+      <point x="255.9375" y="280.0" />
+      <point x="-109.8125" y="125.0" />
+    </edge>
+    <edge source="readability.TextStatisticsSimple" target="readability.TextStatistics">
+      <point x="52.0" y="-88.5" />
+      <point x="501.0" y="290.0" />
+      <point x="412.8125" y="290.0" />
+      <point x="47.0625" y="125.0" />
+    </edge>
+    <edge source="readability.Main" target="readability.Application">
+      <point x="-44.5" y="-28.5" />
+      <point x="436.56018518518516" y="715.0" />
+      <point x="278.4328703703704" y="715.0" />
+      <point x="0.0" y="76.5" />
+    </edge>
+    <edge source="readability.Application" target="readability.TextStatistics">
+      <point x="113.33333333333331" y="-76.5" />
+      <point x="391.7662037037037" y="512.0" />
+      <point x="334.5" y="512.0" />
+      <point x="334.5" y="290.0" />
+      <point x="350.0625" y="290.0" />
+      <point x="-15.6875" y="125.0" />
+    </edge>
+    <edge source="readability.TextStatisticsLazy" target="readability.TextStatistics">
+      <point x="-48.0" y="-88.5" />
+      <point x="621.0" y="280.0" />
+      <point x="444.1875" y="280.0" />
+      <point x="78.4375" y="125.0" />
+    </edge>
+    <edge source="readability.Application" target="readability.ReadabilityScores">
+      <point x="-113.33333333333331" y="-76.5" />
+      <point x="165.09953703703707" y="512.0" />
+      <point x="156.5" y="512.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+    <edge source="readability.Main" target="readability.TextStatisticsLazy">
+      <point x="44.5" y="-28.5" />
+      <point x="525.5601851851852" y="715.0" />
+      <point x="669.0" y="715.0" />
+      <point x="0.0" y="88.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="432.0" y="412.5" />
+  <SelectedNodes>
+    <node>readability.TextStatisticsSimple</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
