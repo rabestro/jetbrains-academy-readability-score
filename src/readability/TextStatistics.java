@@ -40,4 +40,47 @@ public interface TextStatistics {
         return countSyllables(word) > 2;
     }
 
+    static TextStatistics from(final String text) {
+        final var characters = text.replaceAll("\\s", "").length();
+        final var words = WORDS_DELIMITER.splitAsStream(text).count();
+        final var sentences = SENTENCES_DELIMITER.splitAsStream(text).count();
+        final var syllables = WORDS_DELIMITER.splitAsStream(text)
+                .mapToLong(TextStatistics::countSyllables)
+                .sum();
+        final var polysyllables = WORDS_DELIMITER.splitAsStream(text)
+                .filter(TextStatistics::isPolysyllable)
+                .count();
+
+        return new TextStatistics() {
+            @Override
+            public long getCharacters() {
+                return characters;
+            }
+
+            @Override
+            public long getWords() {
+                return words;
+            }
+
+            @Override
+            public long getSentences() {
+                return sentences;
+            }
+
+            @Override
+            public long getSyllables() {
+                return syllables;
+            }
+
+            @Override
+            public long getPolysyllables() {
+                return polysyllables;
+            }
+
+            @Override
+            public String getText() {
+                return text;
+            }
+        };
+    }
 }
